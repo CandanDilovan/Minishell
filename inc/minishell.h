@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:27:15 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/07/25 17:58:45 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/07/26 19:35:47 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-# include <inc/libft/libft.h>
+# include <unistd.h>
+# include <libft/libft.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 #endif
