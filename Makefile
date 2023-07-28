@@ -6,12 +6,12 @@
 #    By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/25 15:27:08 by dilovancand       #+#    #+#              #
-#    Updated: 2023/07/26 22:32:46 by dilovancand      ###   ########.fr        #
+#    Updated: 2023/07/27 22:39:24 by dilovancand      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Minishell
-SOURCES = src/minishell.c
+SOURCES = src/minishell.c src/signal_handler.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
@@ -25,12 +25,12 @@ RL_LIB = -L $(READLINE)/lib -lreadline
 
 all: ${NAME}
 
-src/%.o: src/%.c
-	$(CC) -c $(CFLAGS) $(RL_INC) -I $(INC_DIR) $< -o $@
+%.o: %.c
+	$(CC) -c $(CFLAGS) $< -o $@  $(RL_INC) -I $(INC_DIR)
 
 ${NAME}: ${OBJECTS}
 	make -C inc/libft
-	$(CC) $(CFLAGS) ${OBJECTS} ${LIBFT_LIB} ${RL_LIB} -o ${NAME}
+	$(CC) $(CFLAGS) -o ${NAME} ${OBJECTS} ${LIBFT_LIB} ${RL_LIB}
 
 clean:
 	make -C inc/libft clean

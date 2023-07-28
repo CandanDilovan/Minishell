@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 17:41:37 by dcandan           #+#    #+#             */
-/*   Updated: 2023/03/23 15:47:06 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/07/27 20:18:10 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*nextline(char *sstr)
 	return (nextstr);
 }
 
-char	*readline(int fd, char *sstr, char *buf)
+static char	*readlinentm(int fd, char *sstr, char *buf)
 {
 	int	ret;
 
@@ -111,7 +111,7 @@ char	*get_next_line(int fd)
 		return (sstr);
 	}
 	str = NULL;
-	sstr = readline(fd, sstr, buf);
+	sstr = readlinentm(fd, sstr, buf);
 	if (!sstr)
 		return (free_all(sstr));
 	str = cutsr(sstr);

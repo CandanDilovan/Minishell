@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/07/28 16:56:17 by dilovancand      ###   ########.fr       */
+/*   Created: 2023/07/27 22:38:28 by dilovancand       #+#    #+#             */
+/*   Updated: 2023/07/28 16:55:48 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+void	ft_sigint_handler(int si)
 {
-	char	*test2;
+	(void)si;
+	ft_printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-	signal(SIGINT, ft_sigint_handler);
-	signal(SIGQUIT, ft_sigquit_handler);
-	while (1)
-	{
-		test2 = readline("minishell $ ");
-		if (test2 == NULL)
-			break ;
-		else
-			add_history(test2);
-	}
-	free(test2);
-	return (0);
+void	ft_sigquit_handler(int si)
+{
+	(void)si;
 }
