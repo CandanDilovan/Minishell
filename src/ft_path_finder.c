@@ -6,12 +6,13 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 22:09:10 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/07/31 20:20:11 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/07/31 20:30:51 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//calcul la taille du $path pour le malloc par la suite
 static int	ft_path_size(char *str)
 {
 	int		a;
@@ -34,6 +35,7 @@ static int	ft_path_size(char *str)
 	return (0);
 }
 
+//copie le $path pour getenv
 static char	*ft_preprint(char *str, int b, int a)
 {
 	char	*tmp;
@@ -52,6 +54,7 @@ static char	*ft_preprint(char *str, int b, int a)
 	return (tmp);
 }
 
+//sépare la chaine de caractère en deux
 static void	ft_split_path(char *str, t_pathport **pathing, int a)
 {
 	int	b;
@@ -79,6 +82,11 @@ static void	ft_split_path(char *str, t_pathport **pathing, int a)
 	}
 }
 
+/* 
+	coupe la chaine de caractère en deux isole le $PATH puis 
+	recolle la chaine en ajoutant le chemin d'accès à la place
+	$PATH
+*/
 char	*ft_print_path(char *str)
 {
 	int			a;
@@ -95,7 +103,6 @@ char	*ft_print_path(char *str)
 		if (pathing->final[a] == '$')
 		{
 			b = ft_path_size(pathing->final);
-			ft_printf("%d\n", b);
 			pathing->pathifik = ft_preprint(pathing->final, b, a);
 			pathing->pathion = getenv(pathing->pathifik);
 			ft_split_path(pathing->final, &pathing, a);

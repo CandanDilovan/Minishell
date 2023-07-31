@@ -6,12 +6,13 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/07/31 16:43:49 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/07/31 20:31:29 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//check si il y a un $ si oui renvoie 1 sinon renvoie 0
 static int	ft_ispth(char *str)
 {
 	int	a;
@@ -29,7 +30,7 @@ static int	ft_ispth(char *str)
 int	main(void)
 {
 	char	*test2;
-	char 	*test3;
+	char	*test3;
 
 	signal(SIGINT, ft_sigint_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
