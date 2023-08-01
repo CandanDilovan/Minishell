@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/07/31 20:31:29 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/01 16:57:22 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,42 @@ static int	ft_ispth(char *str)
 	return (0);
 }
 
-int	main(void)
+//boucle infini, affiche le prompt et gère les arguments envoyer
+void	ft_minishell(void)
 {
-	char	*test2;
-	char	*test3;
+	t_crust	*crust;
 
-	signal(SIGINT, ft_sigint_handler);
-	signal(SIGQUIT, ft_sigquit_handler);
+	crust = malloc(sizeof(t_crust));
+	if (!crust)
+		return ;
 	while (1)
 	{
-		test2 = readline("minishell $ ");
-		if (test2 == NULL)
-			break ;
-		else
+		crust->input = readline("minishell $ ");
+		if (crust->input == NULL)
 		{
-			if (ft_ispth(test2) == 1)
+			ft_printf("exit\n");
+			break ;
+		}
+		else
+		{	
+			if (is_quote_close(crust->input) == 1)
+				printf("Quote is not closed\n");
+			if (ft_ispth(crust->input) == 1)
 			{
-				test3 = ft_print_path(test2);
-				ft_printf("%s\n", test3);
+				crust->for_print = ft_print_path(crust->input);
+				ft_printf("%s\n", crust->for_print);
 			}
-			add_history(test2);
+			add_history(crust->input);
 		}
 	}
-	free(test2);
+	free(crust->input);
+}
+
+int	main(void)
+{
+	signal(SIGINT, ft_sigint_handler);
+	signal(SIGQUIT, ft_sigquit_handler);
+	ft_minishell();
+
 	return (0);
 }

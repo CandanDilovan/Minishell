@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:27:15 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/07/30 20:58:48 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/01 16:52:14 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,32 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+//contient chaque mot ainsi que c'est attribut, noyau du parsing
+typedef struct s_core
+{
+	char	*str;
+	int		flag;
+	int		cmd;
+}			t_core;
+
+//contient le début de la liste chainée et le nombre de liste
+typedef struct s_mantle
+{
+	t_list	*first;
+	int		list_nb;
+}			t_mantle;
+
+//couche exterieur du parsing contient 
+typedef struct s_crust
+{
+	char		*input;
+	char		*for_print;
+	char		*path;
+	t_mantle	*lst_pars;
+	t_mantle	*lst_cmd;
+}				t_crust;
+
+//struct qui gère les $path
 typedef struct s_pathport
 {
 	char	*final;
@@ -28,6 +54,9 @@ typedef struct s_pathport
 	char	*string1;
 	char	*string2;
 }			t_pathport;
+
+//parsing
+int		is_quote_close(char *str);
 
 //path handler
 char	*ft_print_path(char *str);
