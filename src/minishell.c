@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/01 16:57:22 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/08 14:18:34 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,25 @@ static int	ft_ispth(char *str)
 	return (0);
 }
 
+// void	ft_mantle_cmd(char **tab, t_mantle *mantle)
+// {
+// 	t_core	*cmd_core;
+
+// 	cmd_core = malloc(sizeof(t_core));
+// 	if (!cmd_core)
+// 		return ;
+// 	cmd_core->cmd = tab[0];
+	
+// }
+
 //boucle infini, affiche le prompt et gère les arguments envoyer
 void	ft_minishell(void)
 {
 	t_crust	*crust;
+	//char	**tab;
+	//int		a;
 
+	//a = -1;
 	crust = malloc(sizeof(t_crust));
 	if (!crust)
 		return ;
@@ -52,6 +66,11 @@ void	ft_minishell(void)
 				crust->for_print = ft_print_path(crust->input);
 				ft_printf("%s\n", crust->for_print);
 			}
+			// tab = ft_minisplit(crust->input, ' ');
+			// while (tab[++a])
+			// 	ft_printf("%s\n", tab[a]);
+			// free_all(tab, a);
+			// a = 0;
 			add_history(crust->input);
 		}
 	}
@@ -63,6 +82,5 @@ int	main(void)
 	signal(SIGINT, ft_sigint_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
 	ft_minishell();
-
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:27:15 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/04 23:55:55 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/07 16:44:57 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,16 @@ typedef struct s_pathport
 	char	*string2;
 }			t_pathport;
 
-//minisplit_utils
+
+//cmd cleaner
+char	*ft_cmdisgood(char *str);
+
+//minisplit
+char	**ft_minisplit(char const *s, char c);
 void	cpy(char *tab, char *s, int letters, int d);
 int		issep(char str, char sep);
 int		ft_count_tab(char *s, char c, int a, int tab_nb);
+char	**free_all(char **tab, int a);
 
 //parsing
 int		is_quote_close(char *str);
