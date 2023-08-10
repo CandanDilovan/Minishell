@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:36:35 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/07 16:49:14 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/10 17:11:36 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,39 @@ int	is_quote_close(char *str)
 	if (flag_d != 0 || flag_s != 0)
 		return (1);
 	return (0);
+}
+
+/*
+	compare la chaine de caractère avec un char, 
+	renvoie un si elle retrouve le char dans la string
+*/
+int	find_char(char	*tab, char c)
+{
+	int	a;
+
+	a = 0;
+	while (tab[a])
+	{
+		if (tab[a] == c)
+			return (1);
+		a++;
+	}
+	return (0);
+}
+
+/*
+	print le core
+*/
+void	print_core(t_mantle *mantle)
+{
+	t_list	*tmp;
+	t_core	*core_tmp;
+
+	tmp = (t_list *)mantle->first;
+	while (tmp)
+	{
+		core_tmp = (t_core *)tmp->content;
+		ft_printf("%s\n", core_tmp->str);
+		tmp = tmp->next;
+	}
 }

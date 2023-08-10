@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:27:15 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/07 16:44:57 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/10 22:10:07 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,20 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-//contient chaque mot ainsi que c'est attribut, noyau du parsing
+//pour déclarer le type
+typedef enum s_type
+{
+	NO,
+	CMD,
+	FLAG,
+	ARG,
+}			t_type;
+
+//contient chaque mot ainsi que son attribut, noyau du parsing
 typedef struct s_core
 {
 	char	*str;
-	int		flag;
-	int		cmd;
+	t_type	type;
 }			t_core;
 
 //contient le début de la liste chainée et le nombre de liste
@@ -38,12 +46,19 @@ typedef struct s_mantle
 //couche exterieur du parsing contient 
 typedef struct s_crust
 {
-	char		*input;
 	char		*for_print;
+	char		*input;
 	char		*path;
-	t_mantle	*lst_pars;
 	t_mantle	*lst_cmd;
 }				t_crust;
+
+//plus haute couche du parsing coupe la chaine au niveau des pipes
+typedef struct s_space
+{
+	t_list	*crust;
+	char	*input;
+	char	**chatab;
+}				t_space;
 
 //struct qui gère les $path
 typedef struct s_pathport
@@ -66,8 +81,14 @@ int		issep(char str, char sep);
 int		ft_count_tab(char *s, char c, int a, int tab_nb);
 char	**free_all(char **tab, int a);
 
+//list alloc
+void	ft_alloc_mantle(char **tab, t_mantle *mantle);
+void	ft_alloc_space(char **tab, t_list **space);
+
 //parsing
 int		is_quote_close(char *str);
+int		find_char(char	*tab, char c);
+void	print_core(t_mantle *mantle);
 
 //path handler
 char	*ft_print_path(char *str);
