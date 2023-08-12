@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:27:15 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/10 22:10:07 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 00:02:20 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct s_pathport
 	char	*pathion;
 	char	*string1;
 	char	*string2;
+	int		flag;
+	char	c;
 }			t_pathport;
 
 
@@ -91,7 +93,7 @@ int		find_char(char	*tab, char c);
 void	print_core(t_mantle *mantle);
 
 //path handler
-char	*ft_print_path(char *str);
+char	*ft_print_path(char *str, t_pathport *path);
 int		ft_path_strlen(char *str, int b);
 
 //signal handler

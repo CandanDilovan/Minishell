@@ -6,56 +6,75 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/10 22:40:57 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 00:09:21 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //check si il y a un $ si oui renvoie 1 sinon renvoie 0
-// static int	ft_ispth(char *str)
-// {
-// 	int	a;
+static int	ft_ispth(char *str)
+{
+	int	a;
 
-// 	a = 0;
-// 	while (str[a])
-// 	{
-// 		if (str[a] == '$')
-// 			return (1);
-// 		a++;
-// 	}
-// 	return (0);
-// }
+	a = 0;
+	while (str[a])
+	{
+		if (str[a] == '$')
+			return (1);
+		a++;
+	}
+	return (0);
+}
 
+//gère l'input si il n'y a pas de pipe
 static void	no_pipe(const char *str)
 {
-	t_crust	*crust;
-	char	**tab;
+	t_crust		*crust;
+	t_pathport	*path;
+	char		**tab;
 
 	crust = malloc(sizeof(t_crust));
 	crust->lst_cmd = malloc(sizeof(t_mantle));
 	if (!crust || !crust->lst_cmd)
 		return ;
-	tab = ft_minisplit(str, ' ');
-	ft_alloc_mantle(tab, crust->lst_cmd);
-	print_core(crust->lst_cmd);
-	return ;
-}
-
-static void	ft_space2crust(t_list *list)
-{
-	t_crust	*crust;
-	char	**tab;
-
-	crust = (t_crust *)list->content;
-	crust->lst_cmd = malloc(sizeof(t_mantle));
-	if (!crust->lst_cmd)
-		return ;
+	crust->input = (char *)str;
+	if (ft_ispth(crust->input) == 1)
+	{	
+		path = malloc(sizeof(t_pathport));
+		if (!path)
+			return ;
+		crust->input = ft_print_path(crust->input, path);
+	}
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
 	print_core(crust->lst_cmd);
 }
 
+//remplie la liste chainée de crust (et les print pour le moment)
+static void	ft_space2crust(t_list *list)
+{
+	t_crust		*crust;
+	char		**tab;	
+	t_pathport	*path;
+
+	crust = (t_crust *)list->content;
+	crust->lst_cmd = malloc(sizeof(t_mantle));
+	if (!crust->lst_cmd)
+		return ;
+	if (ft_ispth(crust->input) == 1)
+	{
+		path = malloc(sizeof(t_pathport));
+		if (!path)
+			return ;
+		crust->input = ft_print_path(crust->input, path);
+	}
+	tab = ft_minisplit(crust->input, ' ');
+	ft_alloc_mantle(tab, crust->lst_cmd);
+	print_core(crust->lst_cmd);
+}
+
+//coupe la string en plusieurs string par pipe
 static void	is_pipe(const char *str)
 {
 	char	**output;
@@ -96,11 +115,6 @@ void	ft_minishell(void)
 				is_pipe(str);
 			else
 				no_pipe(str);
-			// if (ft_ispth(crust->input) == 1)
-			// {
-			// 	crust->for_print = ft_print_path(crust->input);
-			// 	ft_printf("%s\n", crust->for_print);
-			// }
 			add_history(str);
 		}
 	}

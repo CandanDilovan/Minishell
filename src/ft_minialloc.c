@@ -6,12 +6,13 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:23:10 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/10 22:40:36 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 00:07:37 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//malloc et remplie chaque core en définissant son type
 static t_core	*ft_alloc_core(char **tab, int a)
 {
 	t_core	*core;
@@ -29,6 +30,7 @@ static t_core	*ft_alloc_core(char **tab, int a)
 	return (core);
 }
 
+//créer une liste chainée de core dans mantle
 void	ft_alloc_mantle(char **tab, t_mantle *mantle)
 {
 	t_core	*tmp;
@@ -44,6 +46,7 @@ void	ft_alloc_mantle(char **tab, t_mantle *mantle)
 	}
 }
 
+//maloc et remplie chaque crust avec leurs input à gérer 
 static t_crust	*ft_alloc_crust(char **tab, int a)
 {
 	t_crust	*crust;
@@ -55,6 +58,7 @@ static t_crust	*ft_alloc_crust(char **tab, int a)
 	return (crust);
 }
 
+//créer une liste chainée de crust
 void	ft_alloc_space(char **tab, t_list **space)
 {
 	t_crust	*tmp;

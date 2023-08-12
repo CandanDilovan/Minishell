@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 22:09:10 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/01 14:23:37 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 00:08:34 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_path_size(char *str)
 		while (str[a + b] >= '!' && str[a + b] <= '~' && str[a + b])
 		{
 			b++;
-			if (str[a + b] == '$')
+			if (str[a + b] == '$' || str[a + b] == 34 || str[a + b] == 39)
 				return (b);
 		}
 		return (b);
@@ -42,7 +42,7 @@ static char	*ft_preprint(char *str, int b, int a)
 	int		c;
 
 	c = 1;
-	tmp = malloc(sizeof(char) * (b));
+	tmp = malloc(sizeof(char) * (b + 1));
 	if (!tmp)
 		return (NULL);
 	while (c < b)
@@ -87,31 +87,54 @@ static void	ft_split_path(char *str, t_pathport **pathing, int a)
 	recolle la chaine en ajoutant le chemin d'accès à la place
 	$PATH
 */
-char	*ft_print_path(char *str)
+static char	*ft_return_path(t_pathport *pathing, int a)
 {
-	int			a;
 	int			b;
-	t_pathport	*pathing;
 
-	a = 0;
-	pathing = malloc(sizeof(t_pathport));
-	if (!pathing)
-		return (NULL);
-	pathing->final = str;
-	while (pathing->final[a])
+	if (pathing->final[a] == '$')
 	{
-		if (pathing->final[a] == '$')
-		{
-			b = ft_path_size(pathing->final);
-			pathing->pathifik = ft_preprint(pathing->final, b, a);
-			pathing->pathion = getenv(pathing->pathifik);
-			ft_split_path(pathing->final, &pathing, a);
-			pathing->final = ft_strjoin(pathing->string1, pathing->pathion);
-			pathing->final = ft_strjoin(pathing->final, pathing->string2);
-			free(pathing->string1);
-			free(pathing->string2);
-		}
-		a++;
+		b = ft_path_size(pathing->final);
+		pathing->pathifik = ft_preprint(pathing->final, b, a);
+		pathing->pathion = getenv(pathing->pathifik);
+		ft_split_path(pathing->final, &pathing, a);
+		pathing->final = ft_strjoin(pathing->string1, pathing->pathion);
+		pathing->final = ft_strjoin(pathing->final, pathing->string2);
+		(free(pathing->string1), free(pathing->string2));
 	}
 	return (pathing->final);
+}
+
+/*
+	récupère une chaine de charactère contenant un $,
+	ainsi qu'une struct qui permet le découpage de la string,
+	la fonction parcours la string tout en répérant les quotes,
+	si le $ est dans une single quote la fonction l'ignore
+	sinon va chercher la variable d'environnement et la place dans la string
+*/
+char	*ft_print_path(char *str, t_pathport *path)
+{
+	int			a;
+
+	a = -1;
+	path->final = str;
+	path->flag = 0;
+	path->c = 0;
+	while (path->final[++a])
+	{
+		if (path->flag == 1 && path->final[a] == path->c)
+		{
+			path->flag = 0;
+			path->c = 0;
+		}
+		else if (path->flag == 0
+			&& (path->final[a] == 34 || path->final[a] == 39))
+		{
+			path->c = path->final[a];
+			path->flag = 1;
+		}
+		if (path->final[a] == '$')
+			if (path->c != 39)
+				path->final = ft_return_path(path, a);
+	}
+	return (path->final);
 }
