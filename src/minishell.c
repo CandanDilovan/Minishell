@@ -6,25 +6,30 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 00:09:21 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 20:36:07 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//check si il y a un $ si oui renvoie 1 sinon renvoie 0
-static int	ft_ispth(char *str)
+/*
+	récupère la liste chainée contenant les cores les parcours
+	retire les quotes qui ne sont pas dans d'autres quotes
+	dans la chaine de charactère
+*/
+static void	remove_quotes(t_mantle *mantle)
 {
-	int	a;
+	t_core	*core;
+	char	*str;
 
-	a = 0;
-	while (str[a])
+	while (mantle->first)
 	{
-		if (str[a] == '$')
-			return (1);
-		a++;
+		core = (t_core *)mantle->first->content;
+		str = ft_cmdisgood(core->str);
+		ft_printf("%s\n", str);
+		core->str = str;
+		mantle->first = mantle->first->next;
 	}
-	return (0);
 }
 
 //gère l'input si il n'y a pas de pipe
@@ -48,6 +53,7 @@ static void	no_pipe(const char *str)
 	}
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
+	remove_quotes(crust->lst_cmd);
 	print_core(crust->lst_cmd);
 }
 
@@ -71,6 +77,7 @@ static void	ft_space2crust(t_list *list)
 	}
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
+	remove_quotes(crust->lst_cmd);
 	print_core(crust->lst_cmd);
 }
 

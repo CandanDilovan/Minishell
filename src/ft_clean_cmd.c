@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:42:08 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/07 16:44:18 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 20:33:33 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ static int	ft_cmd_strlen(char *str)
 	int		b;
 
 	a = 0;
-	b = 0;
-	while ((str[a + b] < '!' || str[a + b] > '~') && str[a])
+	b = -1;
+	while ((str[a] < '!' || str[a] > '~') && str[a])
 		a++;
-	while (str[a + b++])
+	while (str[a + ++b])
 	{
 		if (str[a + b] == 34 || str[a + b] == 39 || str[a + b] == ' ')
 		{
 			c = str[a + b];
 			a++;
-			while (str[a + b] != c)
+			while (str[a + b] != c && str[a + b])
 				b++;
 			if (c == ' ')
 			{
 				b++;
-				while (str[a + b] == c)
+				while (str[a + b] == c && str[a + b])
 					a++;
 			}
 		}
@@ -50,9 +50,39 @@ static char	*ft_cmdmalloc(char *str)
 	int		a;
 
 	a = ft_cmd_strlen(str);
-	tmp = malloc(sizeof(char) * (a + 1));
+	tmp = malloc(sizeof(char) * (a));
 	if (!tmp)
 		return (NULL);
+	return (tmp);
+}
+
+//Copie la chaine de charactère
+static char	*ft_clean_copy(char *str, int a, char c)
+{
+	int		b;
+	char	*tmp;
+
+	tmp = ft_cmdmalloc(str);
+	b = -1;
+	while (str[a + ++b])
+	{
+		if (str[a + b] == 34 || str[a + b] == 39 || str[a + b] == ' ')
+		{
+			if (!c)
+				c = str[a + b];
+			else
+				c = 0;
+			a++;
+			while (str[a + b] != c && str[a + b])
+			{
+				tmp[b] = str[a + b];
+				b++;
+			}
+		}
+		else
+			tmp[b] = str[a + b];
+	}
+	tmp[b] = '\0';
 	return (tmp);
 }
 
@@ -61,25 +91,17 @@ char	*ft_cmdisgood(char *str)
 {
 	char	*tmp;
 	int		a;
-	int		b;
 	char	c;
 
-	tmp = ft_cmdmalloc(str);
-	b = 0;
 	a = 0;
-	while ((str[a + b] < '!' || str[a + b] > '~') && str[a])
-		a++;
-	while (str[a + b++])
+	c = 0;
+	if (ft_isquote(str) == 1)
 	{
-		if (str[a + b] == 34 || str[a + b] == 39 || str[a + b] == ' ')
-		{
-			c = str[a + b];
+		while ((str[a] < '!' || str[a] > '~') && str[a])
 			a++;
-			while (str[a + b++] != c)
-				tmp[b] = str[a + b];
-		}
-		else
-			tmp[b] = str[a + b];
+		tmp = ft_clean_copy(str, a, c);
+		return (tmp);
 	}
-	return (tmp);
+	else
+		return (str);
 }

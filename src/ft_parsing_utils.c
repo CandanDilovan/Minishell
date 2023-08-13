@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:36:35 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/10 17:11:36 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 20:32:26 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,35 @@ void	print_core(t_mantle *mantle)
 		ft_printf("%s\n", core_tmp->str);
 		tmp = tmp->next;
 	}
+}
+
+/*
+	check si il y a un $ si oui renvoie 1 sinon 0
+*/
+int	ft_ispth(char *str)
+{
+	int	a;
+
+	a = 0;
+	while (str[a])
+	{
+		if (str[a] == '$')
+			return (1);
+		a++;
+	}
+	return (0);
+}
+
+//check si il y a une quote renvoie 1 si oui
+int	ft_isquote(char *str)
+{
+	int	a;
+
+	a = 0;
+	while (str[a])
+	{
+		if (str[a] == 34 || str[a] == 39)
+			return (1);
+	}
+	return (0);
 }

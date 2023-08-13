@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:27:15 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 00:02:20 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 20:32:39 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	ft_alloc_space(char **tab, t_list **space);
 int		is_quote_close(char *str);
 int		find_char(char	*tab, char c);
 void	print_core(t_mantle *mantle);
+int		ft_ispth(char *str);
+int		ft_isquote(char *str);
 
 //path handler
 char	*ft_print_path(char *str, t_pathport *path);
