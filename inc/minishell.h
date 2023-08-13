@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:27:15 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 20:32:39 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 20:55:22 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_pathport
 	char	*pathion;
 	char	*string1;
 	char	*string2;
-	int		flag;
+	int		f;
 	char	c;
 }			t_pathport;
 

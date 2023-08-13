@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 22:09:10 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 00:08:34 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 20:55:24 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ static char	*ft_return_path(t_pathport *pathing, int a)
 		b = ft_path_size(pathing->final);
 		pathing->pathifik = ft_preprint(pathing->final, b, a);
 		pathing->pathion = getenv(pathing->pathifik);
+		if (!pathing->pathion)
+			return (NULL);
 		ft_split_path(pathing->final, &pathing, a);
 		pathing->final = ft_strjoin(pathing->string1, pathing->pathion);
 		pathing->final = ft_strjoin(pathing->final, pathing->string2);
@@ -117,24 +119,25 @@ char	*ft_print_path(char *str, t_pathport *path)
 
 	a = -1;
 	path->final = str;
-	path->flag = 0;
+	path->f = 0;
 	path->c = 0;
 	while (path->final[++a])
 	{
-		if (path->flag == 1 && path->final[a] == path->c)
+		if (path->f == 1 && path->final[a] == path->c)
 		{
-			path->flag = 0;
+			path->f = 0;
 			path->c = 0;
 		}
-		else if (path->flag == 0
-			&& (path->final[a] == 34 || path->final[a] == 39))
+		else if (path->f == 0 && (path->final[a] == 34 || path->final[a] == 39))
 		{
 			path->c = path->final[a];
-			path->flag = 1;
+			path->f = 1;
 		}
 		if (path->final[a] == '$')
 			if (path->c != 39)
 				path->final = ft_return_path(path, a);
+		if (!path->final)
+			break ;
 	}
 	return (path->final);
 }

@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 20:36:07 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/13 20:59:50 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ static void	no_pipe(const char *str)
 			return ;
 		crust->input = ft_print_path(crust->input, path);
 	}
+	if (!crust->input)
+		return ;
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
-	remove_quotes(crust->lst_cmd);
-	print_core(crust->lst_cmd);
+	(remove_quotes(crust->lst_cmd), print_core(crust->lst_cmd));
 }
 
 //remplie la liste chainée de crust (et les print pour le moment)
-static void	ft_space2crust(t_list *list)
+static int	ft_space2crust(t_list *list)
 {
 	t_crust		*crust;
 	char		**tab;	
@@ -67,18 +68,20 @@ static void	ft_space2crust(t_list *list)
 	crust = (t_crust *)list->content;
 	crust->lst_cmd = malloc(sizeof(t_mantle));
 	if (!crust->lst_cmd)
-		return ;
+		return (1);
 	if (ft_ispth(crust->input) == 1)
 	{
 		path = malloc(sizeof(t_pathport));
 		if (!path)
-			return ;
+			return (1);
 		crust->input = ft_print_path(crust->input, path);
 	}
+	if (!crust->input)
+		return (1);
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
-	remove_quotes(crust->lst_cmd);
-	print_core(crust->lst_cmd);
+	(remove_quotes(crust->lst_cmd), print_core(crust->lst_cmd));
+	return (0);
 }
 
 //coupe la string en plusieurs string par pipe
@@ -96,7 +99,8 @@ static void	is_pipe(const char *str)
 	test = space->crust;
 	while (test)
 	{
-		ft_space2crust(test);
+		if (ft_space2crust(test) == 1)
+			break ;
 		test = test->next;
 	}
 }
