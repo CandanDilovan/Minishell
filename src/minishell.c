@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/15 13:37:46 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/15 17:40:08 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,21 @@
 */
 static void	remove_quotes(t_mantle *mantle)
 {
+	t_list	*list;
 	t_core	*core;
 	char	*str;
 
-	while (mantle->first)
+	list = mantle->first;
+	while (list)
 	{
-		core = (t_core *)mantle->first->content;
-		ft_printf("1");
-		str = ft_cmdisgood(core->str);
-		ft_printf("1");
-		ft_printf("%s\n", str);
-		core->str = str;
-		mantle->first = mantle->first->next;
+		core = (t_core *)list->content;
+		if (ft_isquote(core->str) == 1)
+		{
+			str = ft_cmdisgood(core->str);
+			free(core->str);
+			core->str = str;
+		}
+		list = list->next;
 	}
 }
 
@@ -57,7 +60,7 @@ static void	no_pipe(const char *str)
 		return ;
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
-	//(remove_quotes(crust->lst_cmd), 
+	remove_quotes(crust->lst_cmd);
 	print_core(crust->lst_cmd);
 }
 
@@ -83,8 +86,7 @@ static int	ft_space2crust(t_list *list)
 		return (1);
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
-	//(remove_quotes(crust->lst_cmd), 
-	print_core(crust->lst_cmd);
+	(remove_quotes(crust->lst_cmd), print_core(crust->lst_cmd));
 	return (0);
 }
 
@@ -113,7 +115,7 @@ static void	is_pipe(const char *str)
 void	ft_minishell(void)
 {
 	char	*str;
-	
+
 	while (1)
 	{
 		str = readline("minishell $ ");

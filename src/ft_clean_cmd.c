@@ -6,24 +6,20 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:42:08 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/15 13:13:06 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/15 18:37:52 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //un strlen qui ignore les quotes fermés et les multiples espaces 
-static int	ft_cmd_strlen(char *str)
+static int	ft_cmd_strlen(char *str, int a, int b)
 {
 	char	c;
-	int		a;
-	int		b;
 
-	a = 0;
-	b = -1;
 	while ((str[a] < '!' || str[a] > '~') && str[a])
 		a++;
-	while (str[a + ++b])
+	while (str[a + b])
 	{
 		if (str[a + b] == 34 || str[a + b] == 39 || str[a + b] == ' ')
 		{
@@ -31,13 +27,10 @@ static int	ft_cmd_strlen(char *str)
 			a++;
 			while (str[a + b] != c && str[a + b])
 				b++;
-			if (c == ' ')
-			{
-				b++;
-				while (str[a + b] == c && str[a + b])
-					a++;
-			}
+			a++;
 		}
+		else
+			b++;
 	}
 	return (b);
 }
@@ -47,9 +40,13 @@ static char	*ft_cmdmalloc(char *str)
 {
 	char	*tmp;
 	int		a;
+	int		b;
+	int		c;
 
-	a = ft_cmd_strlen(str);
-	tmp = malloc(sizeof(char) * (a));
+	b = 0;
+	c = 0;
+	a = ft_cmd_strlen(str, b, c);
+	tmp = malloc(sizeof(char) * (a + 1));
 	if (!tmp)
 		return (NULL);
 	return (tmp);
@@ -62,24 +59,24 @@ static char	*ft_clean_copy(char *str, int a, char c)
 	char	*tmp;
 
 	tmp = ft_cmdmalloc(str);
-	b = -1;
-	while (str[a + ++b])
+	b = 0;
+	while (str[a + b])
 	{
 		if (str[a + b] == 34 || str[a + b] == 39 || str[a + b] == ' ')
 		{
-			if (!c)
-				c = str[a + b];
-			else
-				c = 0;
-			a++;
+			c = str[a++ + b];
 			while (str[a + b] != c && str[a + b])
 			{
 				tmp[b] = str[a + b];
 				b++;
 			}
+			a++;
 		}
 		else
+		{
 			tmp[b] = str[a + b];
+			b++;
+		}
 	}
 	tmp[b] = '\0';
 	return (tmp);
