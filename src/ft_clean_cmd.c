@@ -6,12 +6,11 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:42:08 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 20:33:33 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/15 13:13:06 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 //un strlen qui ignore les quotes fermés et les multiples espaces 
 static int	ft_cmd_strlen(char *str)

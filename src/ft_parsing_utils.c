@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:36:35 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 20:32:26 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/15 13:33:25 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	ft_isquote(char *str)
 	{
 		if (str[a] == 34 || str[a] == 39)
 			return (1);
+		a++;
 	}
 	return (0);
 }
