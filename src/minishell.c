@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/15 17:40:08 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/21 10:12:06 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	remove_quotes(t_mantle *mantle)
 	while (list)
 	{
 		core = (t_core *)list->content;
+		if (!core->str)
+			return ;
 		if (ft_isquote(core->str) == 1)
 		{
 			str = ft_cmdisgood(core->str);
@@ -41,7 +43,6 @@ static void	remove_quotes(t_mantle *mantle)
 static void	no_pipe(const char *str)
 {
 	t_crust		*crust;
-	t_pathport	*path;
 	char		**tab;
 
 	crust = malloc(sizeof(t_crust));
@@ -49,15 +50,6 @@ static void	no_pipe(const char *str)
 	if (!crust || !crust->lst_cmd)
 		return ;
 	crust->input = (char *)str;
-	if (ft_ispth(crust->input) == 1)
-	{	
-		path = malloc(sizeof(t_pathport));
-		if (!path)
-			return ;
-		crust->input = ft_print_path(crust->input, path);
-	}
-	if (!crust->input)
-		return ;
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
 	remove_quotes(crust->lst_cmd);
@@ -128,10 +120,13 @@ void	ft_minishell(void)
 		{	
 			if (is_quote_close(str) == 1)
 				printf("Quote is not closed\n");
-			if (find_char(str, '|'))
-				is_pipe(str);
 			else
-				no_pipe(str);
+			{
+				if (find_char(str, '|'))
+					is_pipe(str);
+				else
+					no_pipe(str);
+			}
 			add_history(str);
 		}
 	}

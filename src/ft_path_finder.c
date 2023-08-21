@@ -6,11 +6,20 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 22:09:10 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 20:55:24 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/21 10:28:38 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	check_dollars(char str)
+{
+	if ((str >= 'a' && str <= 'z') || (str >= 'A' && str <= 'Z')
+		|| (str >= '0' && str <= '9'))
+		return (0);
+	else
+		return (1);
+}
 
 //calcul la taille du $path pour le malloc par la suite
 static int	ft_path_size(char *str)
@@ -24,11 +33,13 @@ static int	ft_path_size(char *str)
 		a++;
 	if (str[a] == '$')
 	{
+		a++;
 		while (str[a + b] >= '!' && str[a + b] <= '~' && str[a + b])
 		{
-			b++;
-			if (str[a + b] == '$' || str[a + b] == 34 || str[a + b] == 39)
+			if (str[a + b] == '$' || str[a + b] == 34 || str[a + b] == 39
+				|| check_dollars(str[a + b]) != 0)
 				return (b);
+			b++;
 		}
 		return (b);
 	}
@@ -45,7 +56,7 @@ static char	*ft_preprint(char *str, int b, int a)
 	tmp = malloc(sizeof(char) * (b + 1));
 	if (!tmp)
 		return (NULL);
-	while (c < b)
+	while ((c - 1) != b && check_dollars(str[a + c]) == 0)
 	{
 		tmp[c - 1] = str[a + c];
 		c++;
@@ -92,7 +103,9 @@ static char	*ft_return_path(t_pathport *pathing, int a)
 	int			b;
 
 	if (pathing->final[a] == '$')
-	{
+	{		
+		if (check_dollars(pathing->final[a + 1] == 1))
+			return (pathing->final);
 		b = ft_path_size(pathing->final);
 		pathing->pathifik = ft_preprint(pathing->final, b, a);
 		pathing->pathion = getenv(pathing->pathifik);
@@ -137,7 +150,7 @@ char	*ft_print_path(char *str, t_pathport *path)
 			if (path->c != 39)
 				path->final = ft_return_path(path, a);
 		if (!path->final)
-			break ;
+			return (NULL);
 	}
 	return (path->final);
 }
