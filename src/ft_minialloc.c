@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:23:10 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/21 10:02:18 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/23 11:11:46 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_alloc_mantle(char **tab, t_mantle *mantle)
 }
 
 //maloc et remplie chaque crust avec leurs input à gérer 
-static t_crust	*ft_alloc_crust(char **tab, int a)
+static t_crust	*ft_alloc_crust(char **tab, int pipe, int a)
 {
 	t_crust	*crust;
 
@@ -65,11 +65,13 @@ static t_crust	*ft_alloc_crust(char **tab, int a)
 	if (!crust)
 		return (NULL);
 	crust->input = tab[a];
+	ft_printf("%d\n", pipe);
+	crust->pipe = pipe;
 	return (crust);
 }
 
 //créer une liste chainée de crust
-void	ft_alloc_space(char **tab, t_list **space)
+void	ft_alloc_space(char **tab, t_space **space)
 {
 	t_crust	*tmp;
 	t_list	*list_tmp;
@@ -78,8 +80,8 @@ void	ft_alloc_space(char **tab, t_list **space)
 	a = -1;
 	while (tab[++a])
 	{
-		tmp = ft_alloc_crust(tab, a);
+		tmp = ft_alloc_crust(tab, (*space)->tab[a], a);
 		list_tmp = ft_lstnew((void *)tmp);
-		ft_lstadd_back(space, list_tmp);
+		ft_lstadd_back(&(*space)->crust, list_tmp);
 	}
 }

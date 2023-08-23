@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 20:14:56 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 00:12:55 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/21 19:58:42 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,18 @@ int	ft_path_strlen(char *str, int b)
 		a++;
 	}
 	return (a);
+}
+
+/*
+	si le caractère envoyer n'est pas une lettre ou un nombre renvoie 1,
+	Sert principalement à déterminer la taille de la variable d'environnement en ignorant les caractères
+	qui ne peuvent pas être utiliser dans gentenv.
+*/
+int	check_dollars(char str)
+{
+	if ((str >= 'a' && str <= 'z') || (str >= 'A' && str <= 'Z')
+		|| (str >= '0' && str <= '9'))
+		return (0);
+	else
+		return (1);
 }

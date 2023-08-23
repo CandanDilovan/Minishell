@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/21 10:12:06 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/23 11:03:30 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ static void	no_pipe(const char *str)
 	crust->input = (char *)str;
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
-	remove_quotes(crust->lst_cmd);
-	print_core(crust->lst_cmd);
+	(remove_quotes(crust->lst_cmd), print_core(crust->lst_cmd));
 }
 
 //remplie la liste chainée de crust (et les print pour le moment)
@@ -61,20 +60,10 @@ static int	ft_space2crust(t_list *list)
 {
 	t_crust		*crust;
 	char		**tab;	
-	t_pathport	*path;
 
 	crust = (t_crust *)list->content;
 	crust->lst_cmd = malloc(sizeof(t_mantle));
 	if (!crust->lst_cmd)
-		return (1);
-	if (ft_ispth(crust->input) == 1)
-	{
-		path = malloc(sizeof(t_pathport));
-		if (!path)
-			return (1);
-		crust->input = ft_print_path(crust->input, path);
-	}
-	if (!crust->input)
 		return (1);
 	tab = ft_minisplit(crust->input, ' ');
 	ft_alloc_mantle(tab, crust->lst_cmd);
@@ -93,7 +82,7 @@ static void	is_pipe(const char *str)
 	if (!space)
 		return ;
 	output = ft_minisplit(str, '|');
-	ft_alloc_space(output, &space->crust);
+	(ft_pipecount((char *)str, space), ft_alloc_space(output, &space));
 	test = space->crust;
 	while (test)
 	{

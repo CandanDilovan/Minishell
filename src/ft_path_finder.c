@@ -6,20 +6,11 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 22:09:10 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/21 10:28:38 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/21 19:59:28 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	check_dollars(char str)
-{
-	if ((str >= 'a' && str <= 'z') || (str >= 'A' && str <= 'Z')
-		|| (str >= '0' && str <= '9'))
-		return (0);
-	else
-		return (1);
-}
 
 //calcul la taille du $path pour le malloc par la suite
 static int	ft_path_size(char *str)
@@ -95,16 +86,16 @@ static void	ft_split_path(char *str, t_pathport **pathing, int a)
 
 /* 
 	coupe la chaine de caractère en deux isole le $PATH puis 
-	recolle la chaine en ajoutant le chemin d'accès à la place
-	$PATH
+	recolle la chaine en ajoutant le chemin d'accès à la place 
+	de $PATH ou équivalent du moment qu'il existe dans l'ordinateur
 */
 static char	*ft_return_path(t_pathport *pathing, int a)
 {
 	int			b;
 
 	if (pathing->final[a] == '$')
-	{		
-		if (check_dollars(pathing->final[a + 1] == 1))
+	{	
+		if (check_dollars(pathing->final[a + 1]) == 1)
 			return (pathing->final);
 		b = ft_path_size(pathing->final);
 		pathing->pathifik = ft_preprint(pathing->final, b, a);

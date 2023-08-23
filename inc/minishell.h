@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 17:27:15 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/13 20:55:22 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/08/23 10:56:42 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_crust
 	char		*for_print;
 	char		*input;
 	char		*path;
+	int			pipe;
 	t_mantle	*lst_cmd;
 }				t_crust;
 
@@ -58,6 +59,7 @@ typedef struct s_space
 	t_list	*crust;
 	char	*input;
 	char	**chatab;
+	int		*tab;
 }				t_space;
 
 //struct qui gère les $path
@@ -85,9 +87,10 @@ char	**free_all(char **tab, int a);
 
 //list alloc
 void	ft_alloc_mantle(char **tab, t_mantle *mantle);
-void	ft_alloc_space(char **tab, t_list **space);
+void	ft_alloc_space(char **tab, t_space **space);
 
 //parsing
+void	ft_pipecount(char *str, t_space *space);
 int		is_quote_close(char *str);
 int		find_char(char	*tab, char c);
 void	print_core(t_mantle *mantle);
@@ -95,6 +98,7 @@ int		ft_ispth(char *str);
 int		ft_isquote(char *str);
 
 //path handler
+int		check_dollars(char str);
 char	*ft_print_path(char *str, t_pathport *path);
 int		ft_path_strlen(char *str, int b);
 
