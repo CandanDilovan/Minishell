@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 21:09:46 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/23 11:31:29 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/09/02 11:43:45 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 /*
 	remplie le tableau de int pipe avec le nombre de pipe qui le précède 
 	1 si c'est une single pipe, 2 si c'est un double pipe
-	la valeur est stocker dans crust, dans le int pipesi la récupérer est necessaire,
+	la valeur est stocker dans crust, dans le int pipe si la récupérer est necessaire,
 */
 static void	ft_pipeo(char *str, t_space *space)
 {

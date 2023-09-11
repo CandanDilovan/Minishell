@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/23 11:03:30 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/09/07 23:15:05 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	no_pipe(const char *str)
 		return ;
 	crust->input = (char *)str;
 	tab = ft_minisplit(crust->input, ' ');
+	ft_microsplit(crust->input);
 	ft_alloc_mantle(tab, crust->lst_cmd);
 	(remove_quotes(crust->lst_cmd), print_core(crust->lst_cmd));
 }

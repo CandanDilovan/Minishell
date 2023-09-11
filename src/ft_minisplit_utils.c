@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 21:21:55 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/08/07 16:38:49 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/09/11 14:28:44 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,25 @@ void	cpy(char *tab, char *s, int letters, int d)
 	tab[a] = '\0';
 }
 
+int	ez_count(char *s, char flag, int a)
+{
+	a++;
+	while (s[a] != flag)
+		a++;
+	a++;
+	return (a);
+}
+
 /*
 	compte le nombre de case à allouer dans le tableau
 	ignore tout ce qui se trouve entre single ou double quote
 */
 int	ft_count_tab(char *s, char c, int a, int tab_nb)
 {
-	char	flag;
-
 	while (s[a])
 	{
+		if (s[a] == '<' || s[a] == '>')
+			tab_nb++;
 		while (s[a] && s[a] == c)
 			a++;
 		if (s[a] && s[a] != c)
@@ -55,13 +64,7 @@ int	ft_count_tab(char *s, char c, int a, int tab_nb)
 			while (s[a] && s[a] != c)
 			{
 				if (s[a] == 34 || s[a] == 39)
-				{
-					flag = s[a];
-					a++;
-					while (s[a] != flag)
-						a++;
-					a++;
-				}
+					a = ez_count (s, s[a], a);
 				else
 					a++;
 			}

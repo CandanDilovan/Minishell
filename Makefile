@@ -6,12 +6,12 @@
 #    By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/25 15:27:08 by dilovancand       #+#    #+#              #
-#    Updated: 2023/08/21 21:10:23 by dilovancand      ###   ########.fr        #
+#    Updated: 2023/09/07 23:13:22 by dilovancand      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-SOURCES = src/minishell.c src/signal_handler.c src/ft_path_finder.c src/ft_path_finder_utils.c src/ft_parsing_utils.c src/ft_minisplit.c src/ft_minisplit_utils.c src/ft_minialloc.c src/ft_clean_cmd.c src/ft_redirection.c
+SOURCES = src/minishell.c src/signal_handler.c src/ft_path_finder.c src/ft_path_finder_utils.c src/ft_parsing_utils.c src/ft_minisplit.c src/ft_minisplit_utils.c src/ft_minialloc.c src/ft_clean_cmd.c src/ft_redirection.c src/ft_microsplit.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
