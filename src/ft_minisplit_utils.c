@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 21:21:55 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/09/11 14:28:44 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/09/12 11:37:31 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	cpy(char *tab, char *s, int letters, int d)
 	tab[a] = '\0';
 }
 
-int	ez_count(char *s, char flag, int a)
+static int	ez_count(char *s, char flag, int a)
 {
 	a++;
 	while (s[a] != flag)
@@ -54,8 +54,6 @@ int	ft_count_tab(char *s, char c, int a, int tab_nb)
 {
 	while (s[a])
 	{
-		if (s[a] == '<' || s[a] == '>')
-			tab_nb++;
 		while (s[a] && s[a] == c)
 			a++;
 		if (s[a] && s[a] != c)

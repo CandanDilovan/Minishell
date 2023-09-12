@@ -6,7 +6,7 @@
 /*   By: dilovancandan <dilovancandan@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:32:05 by dilovancand       #+#    #+#             */
-/*   Updated: 2023/09/07 23:15:05 by dilovancand      ###   ########.fr       */
+/*   Updated: 2023/09/12 11:31:24 by dilovancand      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,48 +50,48 @@ static void	no_pipe(const char *str)
 	if (!crust || !crust->lst_cmd)
 		return ;
 	crust->input = (char *)str;
-	tab = ft_minisplit(crust->input, ' ');
-	ft_microsplit(crust->input);
+	tab = ft_microsplit(crust->input);
+	ft_printf("%s\n", tab[0]);
 	ft_alloc_mantle(tab, crust->lst_cmd);
 	(remove_quotes(crust->lst_cmd), print_core(crust->lst_cmd));
 }
 
-//remplie la liste chainée de crust (et les print pour le moment)
-static int	ft_space2crust(t_list *list)
-{
-	t_crust		*crust;
-	char		**tab;	
+// //remplie la liste chainée de crust (et les print pour le moment)
+// static int	ft_space2crust(t_list *list)
+// {
+// 	t_crust		*crust;
+// 	char		**tab;	
 
-	crust = (t_crust *)list->content;
-	crust->lst_cmd = malloc(sizeof(t_mantle));
-	if (!crust->lst_cmd)
-		return (1);
-	tab = ft_minisplit(crust->input, ' ');
-	ft_alloc_mantle(tab, crust->lst_cmd);
-	(remove_quotes(crust->lst_cmd), print_core(crust->lst_cmd));
-	return (0);
-}
+// 	crust = (t_crust *)list->content;
+// 	crust->lst_cmd = malloc(sizeof(t_mantle));
+// 	if (!crust->lst_cmd)
+// 		return (1);
+// 	tab = ft_microsplit(crust->input);
+// 	ft_alloc_mantle(tab, crust->lst_cmd);
+// 	(remove_quotes(crust->lst_cmd), print_core(crust->lst_cmd));
+// 	return (0);
+// }
 
-//coupe la string en plusieurs string par pipe
-static void	is_pipe(const char *str)
-{
-	char	**output;
-	t_space	*space;
-	t_list	*test;
+// //coupe la string en plusieurs string par pipe
+// static void	is_pipe(const char *str)
+// {
+// 	char	**output;
+// 	t_space	*space;
+// 	t_list	*test;
 
-	space = malloc(sizeof(t_space));
-	if (!space)
-		return ;
-	output = ft_minisplit(str, '|');
-	(ft_pipecount((char *)str, space), ft_alloc_space(output, &space));
-	test = space->crust;
-	while (test)
-	{
-		if (ft_space2crust(test) == 1)
-			break ;
-		test = test->next;
-	}
-}
+// 	space = malloc(sizeof(t_space));
+// 	if (!space)
+// 		return ;
+// 	output = ft_minisplit(str, '|');
+// 	(ft_pipecount((char *)str, space), ft_alloc_space(output, &space));
+// 	test = space->crust;
+// 	while (test)
+// 	{
+// 		if (ft_space2crust(test) == 1)
+// 			break ;
+// 		test = test->next;
+// 	}
+// }
 
 //boucle infini, affiche le prompt et gère les arguments envoyer
 void	ft_minishell(void)
@@ -112,10 +112,10 @@ void	ft_minishell(void)
 				printf("Quote is not closed\n");
 			else
 			{
-				if (find_char(str, '|'))
-					is_pipe(str);
-				else
-					no_pipe(str);
+				// if (find_char(str, '|'))
+				// 	is_pipe(str);
+				// else
+				no_pipe(str);
 			}
 			add_history(str);
 		}
@@ -130,3 +130,6 @@ int	main(void)
 	ft_minishell();
 	return (0);
 }
+
+//faire un gentenv peso
+//finir le split
